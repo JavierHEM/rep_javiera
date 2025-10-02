@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.KV_URL!,
+  token: process.env.KV_TOKEN!,
+});
 
 export async function POST(request: NextRequest) {
   try {
@@ -8,15 +13,15 @@ export async function POST(request: NextRequest) {
     // Generar un ID único para este checklist
     const checklistId = `checklist_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
-    // Guardar en Vercel KV con el ID como clave
-    await kv.set(checklistId, {
+    // Guardar en Redis con el ID como clave
+    await redis.set(checklistId, {
       ...data,
       id: checklistId,
       createdAt: new Date().toISOString()
     });
     
     // También guardar en una lista para poder recuperar todos los checklists
-    await kv.lpush('checklists', checklistId);
+    await redis.lpush('checklists', checklistId);
     
     return NextResponse.json({ 
       success: true, 
@@ -40,8 +45,8 @@ export async function PUT(request: NextRequest) {
     // Generar un token único para el enlace
     const linkToken = `link_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
-    // Guardar la información del enlace en KV
-    await kv.set(`link_${linkToken}`, {
+    // Guardar la información del enlace en Redis
+    await redis.set(`link_${linkToken}`, {
       type,
       checklistType,
       metadata,
@@ -52,7 +57,7 @@ export async function PUT(request: NextRequest) {
     });
     
     // Agregar a la lista de enlaces activos
-    await kv.lpush('active_links', linkToken);
+    await redis.lpush('active_links', linkToken);
     
     return NextResponse.json({ 
       success: true, 
@@ -72,12 +77,12 @@ export async function PUT(request: NextRequest) {
 export async function GET() {
   try {
     // Obtener todos los IDs de checklists
-    const checklistIds = await kv.lrange('checklists', 0, -1);
+    const checklistIds = await redis.lrange('checklists', 0, -1);
     
     // Obtener los datos de cada checklist
     const checklists = await Promise.all(
       checklistIds.map(async (id: string) => {
-        const data = await kv.get(id);
+        const data = await redis.get(id);
         return data;
       })
     );

@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.KV_URL!,
+  token: process.env.KV_TOKEN!,
+});
 
 export async function GET(
   request: NextRequest,
@@ -9,7 +14,7 @@ export async function GET(
     const { token } = await params;
     
     // Obtener información del enlace
-    const linkData = await kv.get(`link_${token}`);
+    const linkData = await redis.get(`link_${token}`);
     
     if (!linkData) {
       return NextResponse.json(
@@ -47,7 +52,7 @@ export async function POST(
     const data = await request.json();
     
     // Verificar que el enlace existe y no ha sido usado
-    const linkData = await kv.get(`link_${token}`);
+    const linkData = await redis.get(`link_${token}`);
     
     if (!linkData || (linkData as any).used) { // eslint-disable-line @typescript-eslint/no-explicit-any
       return NextResponse.json(
@@ -60,7 +65,7 @@ export async function POST(
     const checklistId = `checklist_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     
     // Guardar el checklist
-    await kv.set(checklistId, {
+    await redis.set(checklistId, {
       ...data,
       id: checklistId,
       linkToken: token,
@@ -69,10 +74,10 @@ export async function POST(
     });
     
     // Agregar a la lista de checklists
-    await kv.lpush('checklists', checklistId);
+    await redis.lpush('checklists', checklistId);
     
     // Marcar el enlace como usado
-    await kv.set(`link_${token}`, {
+    await redis.set(`link_${token}`, {
       ...(linkData as any), // eslint-disable-line @typescript-eslint/no-explicit-any
       used: true,
       checklistId,

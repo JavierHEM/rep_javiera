@@ -1,11 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 import { CHECKLIST_TYPES, ChecklistType } from '@/types/checklist';
+
+const redis = new Redis({
+  url: process.env.KV_URL!,
+  token: process.env.KV_TOKEN!,
+});
 
 export async function GET() {
   try {
-    // Obtener tipos de checklist desde KV
-    const types = await kv.get('checklist_types');
+    // Obtener tipos de checklist desde Redis
+    const types = await redis.get('checklist_types');
     
     if (!types) {
       // Si no existen, crear los tipos por defecto
@@ -15,7 +20,7 @@ export async function GET() {
         updatedAt: new Date().toISOString()
       }));
       
-      await kv.set('checklist_types', defaultTypes);
+      await redis.set('checklist_types', defaultTypes);
       return NextResponse.json({ 
         success: true, 
         types: defaultTypes 
@@ -48,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Obtener tipos existentes
-    const existingTypes = (await kv.get('checklist_types') || []) as ChecklistType[];
+    const existingTypes = (await redis.get('checklist_types') || []) as ChecklistType[];
     
     // Verificar que no exista un tipo con el mismo ID
     if (existingTypes.find((type: ChecklistType) => type.id === newType.id)) {
@@ -67,7 +72,7 @@ export async function POST(request: NextRequest) {
     
     // Guardar el nuevo tipo
     const updatedTypes = [...existingTypes, typeWithTimestamps];
-    await kv.set('checklist_types', updatedTypes);
+    await redis.set('checklist_types', updatedTypes);
     
     return NextResponse.json({ 
       success: true, 
@@ -95,7 +100,7 @@ export async function PUT(request: NextRequest) {
     }
     
     // Obtener tipos existentes
-    const existingTypes = (await kv.get('checklist_types') || []) as ChecklistType[];
+    const existingTypes = (await redis.get('checklist_types') || []) as ChecklistType[];
     
     // Encontrar y actualizar el tipo
     const typeIndex = existingTypes.findIndex((type: ChecklistType) => type.id === id);
@@ -115,7 +120,7 @@ export async function PUT(request: NextRequest) {
     };
     
     existingTypes[typeIndex] = updatedType;
-    await kv.set('checklist_types', existingTypes);
+    await redis.set('checklist_types', existingTypes);
     
     return NextResponse.json({ 
       success: true, 
