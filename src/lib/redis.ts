@@ -3,14 +3,19 @@ import { Redis } from '@upstash/redis';
 // Función helper para configurar Redis con múltiples opciones de variables de entorno
 export function createRedisClient() {
   // Intentar diferentes combinaciones de variables de entorno
-  const url = process.env.KV_KV_URL || 
-              process.env.KV_URL || 
-              process.env.KV_REDIS_URL || 
-              process.env.KV_KV_REST_API_URL;
+  let url = process.env.KV_KV_URL || 
+            process.env.KV_URL || 
+            process.env.KV_REDIS_URL || 
+            process.env.KV_KV_REST_API_URL;
 
   const token = process.env.KV_KV_REST_API_TOKEN || 
                 process.env.KV_TOKEN || 
                 process.env.KV_KV_REST_API_READ_ONLY_TOKEN;
+
+  // Convertir URL de rediss:// a https:// si es necesario
+  if (url && url.startsWith('rediss://')) {
+    url = url.replace('rediss://', 'https://');
+  }
 
   // Durante el build, las variables de entorno pueden no estar disponibles
   // En ese caso, creamos una instancia dummy que fallará en runtime pero permitirá el build
