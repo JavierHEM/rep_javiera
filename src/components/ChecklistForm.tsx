@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Save, Printer, RefreshCw, CheckCircle } from 'lucide-react';
+import { Save, Printer, RefreshCw, CheckCircle, List, BarChart3 } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 import ToastContainer from './ToastContainer';
 
@@ -299,7 +299,7 @@ export default function ChecklistForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+    <div className="min-h-screen p-4">
       <style>{`
         @media print {
           body * { visibility: hidden; }
@@ -310,15 +310,15 @@ export default function ChecklistForm() {
       `}</style>
 
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-xl shadow-xl overflow-hidden print-area border border-gray-200">
+        <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden print-area border border-gray-200 dark:border-gray-700">
           <div className="bg-gradient-to-r from-blue-800 to-blue-900 text-white p-8">
             <h1 className="text-3xl font-bold text-center mb-2">
               CHECKLIST - TOMA DE EVIDENCIAS E INSTALACIÓN RVE
             </h1>
             <p className="text-center text-blue-100 text-sm">Revisión de Medidores y Equipos</p>
             <div className="text-center mt-4 text-sm text-blue-50">
-              <strong>Crell - Luz que crece</strong><br />
-              Giro: Distribución de Energía Eléctrica | R.U.T: 81.106.900-0
+              <strong>ControlPro - Sistema de Gestión</strong><br />
+              Crell - Luz que crece | Giro: Distribución de Energía Eléctrica
             </div>
           </div>
 
@@ -351,10 +351,10 @@ export default function ChecklistForm() {
               <h2 className="text-xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-lg">
                 INFORMACIÓN GENERAL
               </h2>
-              <div className="border border-gray-300 rounded-b-lg p-6 space-y-4 bg-gray-50">
+              <div className="border border-gray-300 rounded-b-lg p-6 space-y-4 bg-gray-50 dark:bg-gray-700">
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Día</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Día</label>
                     <input
                       type="number"
                       name="fecha_dia"
@@ -363,13 +363,13 @@ export default function ChecklistForm() {
                       min="1"
                       max="31"
                       placeholder="DD"
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                        errors.fecha ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 ${
+                        errors.fecha ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                       }`}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Mes</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Mes</label>
                     <input
                       type="number"
                       name="fecha_mes"
@@ -378,13 +378,13 @@ export default function ChecklistForm() {
                       min="1"
                       max="12"
                       placeholder="MM"
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                        errors.fecha ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 ${
+                        errors.fecha ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                       }`}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Año</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Año</label>
                     <input
                       type="number"
                       name="fecha_ano"
@@ -392,8 +392,8 @@ export default function ChecklistForm() {
                       onChange={handleChange}
                       min="2024"
                       placeholder="AAAA"
-                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                        errors.fecha ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 ${
+                        errors.fecha ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                       }`}
                     />
                   </div>
@@ -403,19 +403,19 @@ export default function ChecklistForm() {
                 )}
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Cliente</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Cliente</label>
                   <div className="flex flex-wrap gap-4">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="cliente_campana" checked={formData.cliente_campana} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Campaña de medición</span>
+                      <input type="checkbox" name="cliente_campana" checked={formData.cliente_campana} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Campaña de medición</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="cliente_reclamo" checked={formData.cliente_reclamo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Reclamo Cliente</span>
+                      <input type="checkbox" name="cliente_reclamo" checked={formData.cliente_reclamo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Reclamo Cliente</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="cliente_sec" checked={formData.cliente_sec} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Requerimiento SEC</span>
+                      <input type="checkbox" name="cliente_sec" checked={formData.cliente_sec} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Requerimiento SEC</span>
                     </label>
                   </div>
                   {errors.cliente && (
@@ -424,15 +424,15 @@ export default function ChecklistForm() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">SED</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">SED</label>
                   <input 
                     type="text" 
                     name="sed" 
                     value={formData.sed} 
                     onChange={handleChange} 
                     placeholder="Ingrese SED" 
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                      errors.sed ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 ${
+                      errors.sed ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                     }`} 
                   />
                   {errors.sed && (
@@ -441,15 +441,15 @@ export default function ChecklistForm() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Ubicación</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Ubicación</label>
                   <input 
                     type="text" 
                     name="ubicacion" 
                     value={formData.ubicacion} 
                     onChange={handleChange} 
                     placeholder="Ingrese ubicación" 
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                      errors.ubicacion ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 ${
+                      errors.ubicacion ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                     }`} 
                   />
                   {errors.ubicacion && (
@@ -459,14 +459,14 @@ export default function ChecklistForm() {
 
                 <div>
                   <label className="flex items-center space-x-2">
-                    <input type="checkbox" name="servicio_orden" checked={formData.servicio_orden} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                    <span className="text-sm font-semibold">Orden de Trabajo</span>
+                    <input type="checkbox" name="servicio_orden" checked={formData.servicio_orden} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                    <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">Orden de Trabajo</span>
                   </label>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Descripción del Trabajo</label>
-                  <textarea name="descripcion_trabajo" value={formData.descripcion_trabajo} onChange={handleChange} rows={3} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white" />
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Descripción del Trabajo</label>
+                  <textarea name="descripcion_trabajo" value={formData.descripcion_trabajo} onChange={handleChange} rows={3} className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white" />
                 </div>
               </div>
             </div>
@@ -476,115 +476,115 @@ export default function ChecklistForm() {
               <h2 className="text-xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-lg">
                 CARACTERÍSTICAS DE LA INSTALACIÓN
               </h2>
-              <div className="border border-gray-300 rounded-b-lg p-6 space-y-6 bg-gray-50">
+              <div className="border border-gray-300 rounded-b-lg p-6 space-y-6 bg-gray-50 dark:bg-gray-700">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Tipo de Red</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tipo de Red</label>
                   <div className="flex flex-wrap gap-4">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="red_subterraneo" checked={formData.red_subterraneo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Subterráneo</span>
+                      <input type="checkbox" name="red_subterraneo" checked={formData.red_subterraneo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Subterráneo</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="red_aereo" checked={formData.red_aereo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Aéreo</span>
+                      <input type="checkbox" name="red_aereo" checked={formData.red_aereo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Aéreo</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="red_preensamblado" checked={formData.red_preensamblado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Preensamblado</span>
+                      <input type="checkbox" name="red_preensamblado" checked={formData.red_preensamblado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Preensamblado</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="red_cable_desnudo" checked={formData.red_cable_desnudo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Cable desnudo</span>
+                      <input type="checkbox" name="red_cable_desnudo" checked={formData.red_cable_desnudo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Cable desnudo</span>
                     </label>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Tipo de Conector</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tipo de Conector</label>
                   <div className="flex flex-wrap gap-4 mb-2">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="conector_udc" checked={formData.conector_udc} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">UDC</span>
+                      <input type="checkbox" name="conector_udc" checked={formData.conector_udc} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">UDC</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="conector_prensa" checked={formData.conector_prensa} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Prensa</span>
+                      <input type="checkbox" name="conector_prensa" checked={formData.conector_prensa} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Prensa</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="conector_terminal" checked={formData.conector_terminal} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Terminal</span>
+                      <input type="checkbox" name="conector_terminal" checked={formData.conector_terminal} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Terminal</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="conector_autoperforante" checked={formData.conector_autoperforante} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Autoperforante</span>
+                      <input type="checkbox" name="conector_autoperforante" checked={formData.conector_autoperforante} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Autoperforante</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="conector_otro" checked={formData.conector_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Otro</span>
+                      <input type="checkbox" name="conector_otro" checked={formData.conector_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Otro</span>
                     </label>
                   </div>
                   {formData.conector_otro && (
-                    <input type="text" name="conector_otro_especificar" value={formData.conector_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border rounded-lg mt-2 placeholder-gray-600" />
+                    <input type="text" name="conector_otro_especificar" value={formData.conector_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg mt-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400" />
                   )}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">Protección</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Protección</label>
                     <div className="space-y-2">
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="proteccion_ppf" checked={formData.proteccion_ppf} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">PPF</span>
+                        <input type="checkbox" name="proteccion_ppf" checked={formData.proteccion_ppf} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">PPF</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="proteccion_directo" checked={formData.proteccion_directo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">Directo</span>
+                        <input type="checkbox" name="proteccion_directo" checked={formData.proteccion_directo} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Directo</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="proteccion_imt" checked={formData.proteccion_imt} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">IMT</span>
+                        <input type="checkbox" name="proteccion_imt" checked={formData.proteccion_imt} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">IMT</span>
                       </label>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">Orden de Conexión</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Orden de Conexión</label>
                     <div className="space-y-2">
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="orden_normal" checked={formData.orden_normal} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">Normal</span>
+                        <input type="checkbox" name="orden_normal" checked={formData.orden_normal} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Normal</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="orden_alterado" checked={formData.orden_alterado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">Alterado</span>
+                        <input type="checkbox" name="orden_alterado" checked={formData.orden_alterado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Alterado</span>
                       </label>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">Estado Puente Potencial</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Estado Puente Potencial</label>
                     <div className="space-y-2">
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="puente_abierto" checked={formData.puente_abierto} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">Abierto</span>
+                        <input type="checkbox" name="puente_abierto" checked={formData.puente_abierto} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Abierto</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="puente_cerrado" checked={formData.puente_cerrado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">Cerrado</span>
+                        <input type="checkbox" name="puente_cerrado" checked={formData.puente_cerrado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Cerrado</span>
                       </label>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">Tierra Protección</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tierra Protección</label>
                     <div className="space-y-2">
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="tierra_existe" checked={formData.tierra_existe} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">Existe</span>
+                        <input type="checkbox" name="tierra_existe" checked={formData.tierra_existe} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Existe</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="tierra_no_existe" checked={formData.tierra_no_existe} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">No existe</span>
+                        <input type="checkbox" name="tierra_no_existe" checked={formData.tierra_no_existe} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">No existe</span>
                       </label>
                     </div>
                   </div>
@@ -597,100 +597,100 @@ export default function ChecklistForm() {
               <h2 className="text-xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-lg">
                 CARACTERÍSTICAS DEL CABLEADO
               </h2>
-              <div className="border border-gray-300 rounded-b-lg p-6 space-y-4 bg-gray-50">
+              <div className="border border-gray-300 rounded-b-lg p-6 space-y-4 bg-gray-50 dark:bg-gray-700">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Tipo Cable Empalme</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tipo Cable Empalme</label>
                   <div className="flex flex-wrap gap-4 mb-2">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="empalme_concentrico" checked={formData.empalme_concentrico} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Concéntrico</span>
+                      <input type="checkbox" name="empalme_concentrico" checked={formData.empalme_concentrico} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Concéntrico</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="empalme_superflex" checked={formData.empalme_superflex} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Superflex</span>
+                      <input type="checkbox" name="empalme_superflex" checked={formData.empalme_superflex} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Superflex</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="empalme_otro" checked={formData.empalme_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Otro</span>
+                      <input type="checkbox" name="empalme_otro" checked={formData.empalme_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Otro</span>
                     </label>
                   </div>
                   {formData.empalme_otro && (
-                    <input type="text" name="empalme_otro_especificar" value={formData.empalme_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white placeholder-gray-600" />
+                    <input type="text" name="empalme_otro_especificar" value={formData.empalme_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400" />
                   )}
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">Tipo Cable Carga</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Tipo Cable Carga</label>
                     <div className="space-y-2">
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="carga_1_5" checked={formData.carga_1_5} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">1.5 mm²</span>
+                        <input type="checkbox" name="carga_1_5" checked={formData.carga_1_5} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">1.5 mm²</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="carga_2_5" checked={formData.carga_2_5} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">2.5 mm²</span>
+                        <input type="checkbox" name="carga_2_5" checked={formData.carga_2_5} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">2.5 mm²</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="carga_4" checked={formData.carga_4} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">4 mm²</span>
+                        <input type="checkbox" name="carga_4" checked={formData.carga_4} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">4 mm²</span>
                       </label>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-3">Capacidad Automático</label>
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Capacidad Automático</label>
                     <div className="space-y-2 mb-2">
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="capacidad_6" checked={formData.capacidad_6} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">6 A</span>
+                        <input type="checkbox" name="capacidad_6" checked={formData.capacidad_6} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">6 A</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="capacidad_8" checked={formData.capacidad_8} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">8 A</span>
+                        <input type="checkbox" name="capacidad_8" checked={formData.capacidad_8} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">8 A</span>
                       </label>
                       <label className="flex items-center space-x-2">
-                        <input type="checkbox" name="capacidad_otro" checked={formData.capacidad_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                        <span className="text-sm text-gray-800 font-medium">Otro</span>
+                        <input type="checkbox" name="capacidad_otro" checked={formData.capacidad_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                        <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Otro</span>
                       </label>
                     </div>
                     {formData.capacidad_otro && (
-                      <input type="text" name="capacidad_otro_especificar" value={formData.capacidad_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white placeholder-gray-600" />
+                      <input type="text" name="capacidad_otro_especificar" value={formData.capacidad_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400" />
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Cañería</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Cañería</label>
                   <div className="flex flex-wrap gap-4 mb-2">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="caneria_galvanizado" checked={formData.caneria_galvanizado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Galvanizado</span>
+                      <input type="checkbox" name="caneria_galvanizado" checked={formData.caneria_galvanizado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Galvanizado</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="caneria_pvc" checked={formData.caneria_pvc} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">PVC</span>
+                      <input type="checkbox" name="caneria_pvc" checked={formData.caneria_pvc} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">PVC</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="caneria_otro" checked={formData.caneria_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Otro</span>
+                      <input type="checkbox" name="caneria_otro" checked={formData.caneria_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Otro</span>
                     </label>
                   </div>
                   {formData.caneria_otro && (
-                    <input type="text" name="caneria_otro_especificar" value={formData.caneria_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white placeholder-gray-600" />
+                    <input type="text" name="caneria_otro_especificar" value={formData.caneria_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400" />
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Movilidad del Cable</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Movilidad del Cable</label>
                   <div className="flex gap-4">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="movilidad_si" checked={formData.movilidad_si} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Sí</span>
+                      <input type="checkbox" name="movilidad_si" checked={formData.movilidad_si} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Sí</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="movilidad_no" checked={formData.movilidad_no} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">No</span>
+                      <input type="checkbox" name="movilidad_no" checked={formData.movilidad_no} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">No</span>
                     </label>
                   </div>
                 </div>
@@ -702,49 +702,49 @@ export default function ChecklistForm() {
               <h2 className="text-xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-lg">
                 ESTADO DEL MEDIDOR
               </h2>
-              <div className="border border-gray-300 rounded-b-lg p-6 space-y-4 bg-gray-50">
+              <div className="border border-gray-300 rounded-b-lg p-6 space-y-4 bg-gray-50 dark:bg-gray-700">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Ubicación</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Ubicación</label>
                   <div className="flex flex-wrap gap-4 mb-2">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="ubicacion_fachada" checked={formData.ubicacion_fachada} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Fachada</span>
+                      <input type="checkbox" name="ubicacion_fachada" checked={formData.ubicacion_fachada} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Fachada</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="ubicacion_otro" checked={formData.ubicacion_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Otro</span>
+                      <input type="checkbox" name="ubicacion_otro" checked={formData.ubicacion_otro} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Otro</span>
                     </label>
                   </div>
                   {formData.ubicacion_otro && (
-                    <input type="text" name="ubicacion_otro_especificar" value={formData.ubicacion_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white placeholder-gray-600" />
+                    <input type="text" name="ubicacion_otro_especificar" value={formData.ubicacion_otro_especificar} onChange={handleChange} placeholder="Especificar..." className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400" />
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">Condición del Medidor</label>
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Condición del Medidor</label>
                   <div className="flex flex-wrap gap-4">
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="condicion_cerrado" checked={formData.condicion_cerrado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Medidor cerrado</span>
+                      <input type="checkbox" name="condicion_cerrado" checked={formData.condicion_cerrado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Medidor cerrado</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="condicion_abierto" checked={formData.condicion_abierto} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Medidor abierto</span>
+                      <input type="checkbox" name="condicion_abierto" checked={formData.condicion_abierto} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Medidor abierto</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="condicion_conexionado" checked={formData.condicion_conexionado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Conexionado medidor</span>
+                      <input type="checkbox" name="condicion_conexionado" checked={formData.condicion_conexionado} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Conexionado medidor</span>
                     </label>
                     <label className="flex items-center space-x-2">
-                      <input type="checkbox" name="condicion_normalizacion" checked={formData.condicion_normalizacion} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                      <span className="text-sm text-gray-800 font-medium">Normalización</span>
+                      <input type="checkbox" name="condicion_normalizacion" checked={formData.condicion_normalizacion} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                      <span className="text-sm text-gray-800 dark:text-gray-200 font-medium">Normalización</span>
                     </label>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Especificar Estado</label>
-                  <textarea name="estado_medidor" value={formData.estado_medidor} onChange={handleChange} rows={3} placeholder="Detalle el estado del medidor..." className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white placeholder-gray-600" />
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Especificar Estado</label>
+                  <textarea name="estado_medidor" value={formData.estado_medidor} onChange={handleChange} rows={3} placeholder="Detalle el estado del medidor..." className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400" />
                 </div>
               </div>
             </div>
@@ -754,36 +754,36 @@ export default function ChecklistForm() {
               <h2 className="text-xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 text-white p-4 rounded-t-lg">
                 REGISTRO FOTOGRÁFICO
               </h2>
-              <div className="border border-gray-300 rounded-b-lg p-6 space-y-3 bg-gray-50">
+              <div className="border border-gray-300 rounded-b-lg p-6 space-y-3 bg-gray-50 dark:bg-gray-700">
                 <label className="flex items-center space-x-2">
-                  <input type="checkbox" name="foto_empalme_medidor" checked={formData.foto_empalme_medidor} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                  <span className="text-sm font-semibold">Medición Empalme y Medidor (simultáneo)</span>
+                  <input type="checkbox" name="foto_empalme_medidor" checked={formData.foto_empalme_medidor} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                  <span className="text-sm font-semibold text-gray-800">Medición Empalme y Medidor (simultáneo)</span>
                 </label>
                 <label className="flex items-center space-x-2">
-                  <input type="checkbox" name="foto_empalme" checked={formData.foto_empalme} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                  <span className="text-sm font-semibold">Foto Empalme</span>
+                  <input type="checkbox" name="foto_empalme" checked={formData.foto_empalme} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                  <span className="text-sm font-semibold text-gray-800">Foto Empalme</span>
                 </label>
                 <label className="flex items-center space-x-2">
-                  <input type="checkbox" name="foto_medidor" checked={formData.foto_medidor} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
-                  <span className="text-sm font-semibold">Foto Medidor</span>
+                  <input type="checkbox" name="foto_medidor" checked={formData.foto_medidor} onChange={handleChange} className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
+                  <span className="text-sm font-semibold text-gray-800">Foto Medidor</span>
                 </label>
               </div>
             </div>
 
             {/* Validación */}
-            <div className="bg-blue-50 rounded-lg p-6 mb-6 border border-blue-200">
-              <h3 className="text-lg font-bold text-blue-900 mb-4">VALIDACIÓN</h3>
+            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6 mb-6 border border-blue-200 dark:border-blue-800">
+              <h3 className="text-lg font-bold text-blue-900 dark:text-blue-100 mb-4">VALIDACIÓN</h3>
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Nombre del Técnico</label>
+                  <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Nombre del Técnico</label>
                   <input 
                     type="text" 
                     name="tecnico_nombre" 
                     value={formData.tecnico_nombre} 
                     onChange={handleChange} 
                     placeholder="Nombre completo" 
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                      errors.tecnico_nombre ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white placeholder-gray-600 dark:placeholder-gray-400 ${
+                      errors.tecnico_nombre ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                     }`} 
                   />
                   {errors.tecnico_nombre && (
@@ -791,14 +791,14 @@ export default function ChecklistForm() {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Fecha</label>
+                  <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Fecha</label>
                   <input 
                     type="date" 
                     name="validacion_fecha" 
                     value={formData.validacion_fecha} 
                     onChange={handleChange} 
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                      errors.validacion_fecha ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white ${
+                      errors.validacion_fecha ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                     }`} 
                   />
                   {errors.validacion_fecha && (
@@ -806,14 +806,14 @@ export default function ChecklistForm() {
                   )}
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Hora</label>
+                  <label className="block text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Hora</label>
                   <input 
                     type="time" 
                     name="validacion_hora" 
                     value={formData.validacion_hora} 
                     onChange={handleChange} 
-                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white ${
-                      errors.validacion_hora ? 'border-red-500' : 'border-gray-300'
+                    className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-600 text-gray-900 dark:text-white ${
+                      errors.validacion_hora ? 'border-red-500' : 'border-gray-300 dark:border-gray-500'
                     }`} 
                   />
                   {errors.validacion_hora && (
@@ -837,7 +837,7 @@ export default function ChecklistForm() {
                   </>
                 ) : (
                   <>
-                    <Save className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                    <Save className="w-5 h-5 text-white" />
                     Guardar en Vercel
                   </>
                 )}
@@ -847,7 +847,7 @@ export default function ChecklistForm() {
                 onClick={handlePrint}
                 className="flex items-center gap-2 bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-emerald-700 hover:to-emerald-800 transition-all shadow-lg hover:shadow-xl"
               >
-                <Printer className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <Printer className="w-5 h-5 text-white" />
                 Imprimir / PDF
               </button>
 
@@ -855,7 +855,7 @@ export default function ChecklistForm() {
                 onClick={handleReset}
                 className="flex items-center gap-2 bg-gradient-to-r from-slate-600 to-slate-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-slate-700 hover:to-slate-800 transition-all shadow-lg hover:shadow-xl"
               >
-                <RefreshCw className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <RefreshCw className="w-5 h-5 text-white" />
                 Limpiar Formulario
               </button>
 
@@ -863,6 +863,7 @@ export default function ChecklistForm() {
                 href="/checklists"
                 className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-indigo-700 hover:to-indigo-800 transition-all shadow-lg hover:shadow-xl"
               >
+                <List className="w-5 h-5 text-white" />
                 Ver Checklists Guardados
               </Link>
 
@@ -870,6 +871,7 @@ export default function ChecklistForm() {
                 href="/"
                 className="flex items-center gap-2 bg-gradient-to-r from-cyan-600 to-cyan-700 text-white px-6 py-3 rounded-lg font-semibold hover:from-cyan-700 hover:to-cyan-800 transition-all shadow-lg hover:shadow-xl"
               >
+                <BarChart3 className="w-5 h-5 text-white" />
                 Dashboard
               </Link>
             </div>
@@ -877,7 +879,7 @@ export default function ChecklistForm() {
             {/* Mensaje de Confirmación */}
             {submitted && (
               <div className="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-2 no-print">
-                <CheckCircle className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                <CheckCircle className="w-5 h-5 text-blue-600 border-gray-300 dark:border-gray-500 rounded focus:ring-blue-500 bg-white dark:bg-gray-600" />
                 <span className="font-semibold">¡Datos guardados exitosamente!</span>
               </div>
             )}

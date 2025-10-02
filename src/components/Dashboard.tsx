@@ -107,9 +107,9 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-xl shadow-xl p-8">
+          <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-xl p-8">
             <div className="animate-pulse">
               <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -130,10 +130,10 @@ export default function Dashboard() {
 
   if (!stats) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-xl shadow-xl p-8 text-center">
-            <p className="text-gray-500">Error al cargar las estadísticas</p>
+          <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-xl p-8 text-center">
+            <p className="text-gray-500 dark:text-gray-400">Error al cargar las estadísticas</p>
           </div>
         </div>
       </div>
@@ -141,14 +141,14 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+    <div className="min-h-screen p-4">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
+        <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-800 to-blue-900 text-white p-8">
             <div className="flex justify-between items-center">
               <div>
-                <h1 className="text-3xl font-bold mb-2">Dashboard Crell</h1>
+                <h1 className="text-3xl font-bold mb-2">Dashboard ControlPro</h1>
                 <p className="text-blue-100">Resumen de actividad y estadísticas</p>
               </div>
               <div className="flex gap-3">
@@ -216,56 +216,56 @@ export default function Dashboard() {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Tipos de Cliente */}
-              <div className="bg-white border border-gray-200 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Tipos de Cliente</h3>
+              <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 dark:text-gray-200 mb-4">Tipos de Cliente</h3>
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                      <span className="text-gray-700">Campaña de Medición</span>
+                      <span className="text-gray-700 dark:text-gray-300 dark:text-gray-300">Campaña de Medición</span>
                     </div>
-                    <span className="font-bold text-gray-800">{stats.clientTypes.campana}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200">{stats.clientTypes.campana}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-4 h-4 bg-red-500 rounded"></div>
-                      <span className="text-gray-700">Reclamo Cliente</span>
+                      <span className="text-gray-700 dark:text-gray-300">Reclamo Cliente</span>
                     </div>
-                    <span className="font-bold text-gray-800">{stats.clientTypes.reclamo}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200">{stats.clientTypes.reclamo}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-4 h-4 bg-green-500 rounded"></div>
-                      <span className="text-gray-700">Requerimiento SEC</span>
+                      <span className="text-gray-700 dark:text-gray-300">Requerimiento SEC</span>
                     </div>
-                    <span className="font-bold text-gray-800">{stats.clientTypes.sec}</span>
+                    <span className="font-bold text-gray-800 dark:text-gray-200">{stats.clientTypes.sec}</span>
                   </div>
                 </div>
               </div>
 
               {/* Resumen de Actividad */}
-              <div className="bg-white border border-gray-200 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Resumen de Actividad</h3>
+              <div className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 dark:text-gray-200 mb-4">Resumen de Actividad</h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <Users className="w-5 h-5 text-blue-600" />
                     <div>
-                      <p className="text-sm text-gray-600">Técnicos Únicos</p>
-                      <p className="font-bold text-gray-800">{stats.uniqueTechnicians}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Técnicos Únicos</p>
+                      <p className="font-bold text-gray-800 dark:text-gray-200">{stats.uniqueTechnicians}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="w-5 h-5 text-green-600" />
                     <div>
-                      <p className="text-sm text-gray-600">SEDs Únicos</p>
-                      <p className="font-bold text-gray-800">{stats.uniqueSEDs}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">SEDs Únicos</p>
+                      <p className="font-bold text-gray-800 dark:text-gray-200">{stats.uniqueSEDs}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="w-5 h-5 text-purple-600" />
                     <div>
-                      <p className="text-sm text-gray-600">Ubicaciones Únicas</p>
-                      <p className="font-bold text-gray-800">{stats.uniqueLocations}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Ubicaciones Únicas</p>
+                      <p className="font-bold text-gray-800 dark:text-gray-200">{stats.uniqueLocations}</p>
                     </div>
                   </div>
                 </div>
@@ -273,32 +273,32 @@ export default function Dashboard() {
             </div>
 
             {/* Checklists Recientes */}
-            <div className="mt-8 bg-white border border-gray-200 rounded-xl p-6">
+            <div className="mt-8 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-800">Checklists Recientes</h3>
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200 dark:text-gray-200">Checklists Recientes</h3>
                 <Link
                   href="/checklists"
-                  className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                  className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
                 >
                   Ver todos →
                 </Link>
               </div>
               <div className="space-y-3">
                 {stats.recentChecklists.map((checklist) => (
-                  <div key={checklist.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div key={checklist.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-500">
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                       <div>
-                        <p className="font-medium text-gray-800">
+                        <p className="font-medium text-gray-800 dark:text-gray-200">
                           {checklist.tecnico_nombre || 'Sin técnico'}
                         </p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-600 dark:text-gray-400">
                           {checklist.sed} - {checklist.ubicacion}
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {formatDate(checklist.createdAt)}
                       </p>
                       <p className="text-xs text-gray-500">

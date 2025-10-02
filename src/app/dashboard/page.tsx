@@ -1,6 +1,6 @@
-import Dashboard from '@/components/Dashboard';
+import AdvancedStats from '@/components/AdvancedStats';
 
 export default function DashboardPage() {
-  return <Dashboard />;
+  return <AdvancedStats />;
 }
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import { Eye, Download, Edit, Trash2, Calendar, User, MapPin } from 'lucide-react';
+import { Eye, Download, Edit, Trash2, MapPin, RefreshCw } from 'lucide-react';
 import SearchFilters from './SearchFilters';
 
 interface Checklist {
@@ -28,6 +28,7 @@ export default function ChecklistList() {
     tecnico?: string;
     sed?: string;
   }>({});
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchChecklists();
@@ -119,6 +120,36 @@ export default function ChecklistList() {
     setFilters({});
   };
 
+  const handleEdit = (checklistId: string) => {
+    window.location.href = `/edit/${checklistId}`;
+  };
+
+  const handleDelete = async (checklistId: string) => {
+    if (!confirm('¿Estás seguro de que quieres eliminar este checklist? Esta acción no se puede deshacer.')) {
+      return;
+    }
+
+    setDeletingId(checklistId);
+    try {
+      const response = await fetch(`/api/checklist/${checklistId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Actualizar la lista local
+        setChecklists(prev => prev.filter(c => c.id !== checklistId));
+        alert('Checklist eliminado exitosamente');
+      } else {
+        throw new Error('Error al eliminar');
+      }
+    } catch (error) {
+      console.error('Error al eliminar:', error);
+      alert('Error al eliminar el checklist. Por favor intenta nuevamente.');
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   const exportToCSV = () => {
     if (checklists.length === 0) return;
 
@@ -168,9 +199,9 @@ export default function ChecklistList() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-600 to-indigo-700 p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-white rounded-lg shadow-2xl p-8">
+          <div className="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-2xl p-8">
             <div className="animate-pulse">
               <div className="h-8 bg-gray-200 rounded w-1/4 mb-4"></div>
               <div className="space-y-3">
@@ -186,15 +217,15 @@ export default function ChecklistList() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+    <div className="min-h-screen p-4">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
+        <div className="bg-gray-100 dark:bg-gray-800 rounded-xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
           <div className="bg-gradient-to-r from-blue-800 to-blue-900 text-white p-8">
             <h1 className="text-3xl font-bold text-center mb-2">
               CHECKLISTS GUARDADOS
             </h1>
             <p className="text-center text-blue-100 text-sm">
-              Gestión de formularios de checklist Crell
+              Gestión de formularios ControlPro
             </p>
           </div>
 
@@ -240,76 +271,90 @@ export default function ChecklistList() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {filteredChecklists.map((checklist) => (
                     <div
                       key={checklist.id}
-                      className="border border-gray-300 rounded-lg p-4 hover:shadow-md transition-shadow bg-white"
+                      className="bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl p-6 hover:shadow-lg transition-all duration-300 hover:scale-105"
                     >
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-4 mb-3">
-                            <span className="text-xs font-mono text-gray-400 bg-gray-100 px-2 py-1 rounded">
-                              {checklist.id}
-                            </span>
-                            <div className="flex items-center gap-1 text-sm text-gray-500">
-                              <Calendar className="w-4 h-4" />
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                              {checklist.tecnico_nombre || 'Sin técnico'}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                               {formatDate(checklist.createdAt)}
-                            </div>
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div className="flex items-center gap-2">
-                              <User className="w-4 h-4 text-blue-600" />
-                              <div>
-                                <p className="text-xs text-gray-500">Técnico</p>
-                                <p className="text-sm font-medium text-gray-900">
-                                  {checklist.tecnico_nombre || 'No especificado'}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-green-600" />
-                              <div>
-                                <p className="text-xs text-gray-500">SED</p>
-                                <p className="text-sm font-medium text-gray-900">
-                                  {checklist.sed || 'No especificado'}
-                                </p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <MapPin className="w-4 h-4 text-purple-600" />
-                              <div>
-                                <p className="text-xs text-gray-500">Ubicación</p>
-                                <p className="text-sm font-medium text-gray-900">
-                                  {checklist.ubicacion || 'No especificado'}
-                                </p>
-                              </div>
-                            </div>
+                            </p>
                           </div>
                         </div>
-                        <div className="flex gap-2 ml-4">
-                          <button
-                            onClick={() => setSelectedChecklist(checklist)}
-                            className="flex items-center gap-1 bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-indigo-700 transition-colors"
-                          >
-                            <Eye className="w-4 h-4" />
-                            Ver
-                          </button>
-                          <button
-                            onClick={() => {/* TODO: Implementar edición */}}
-                            className="flex items-center gap-1 bg-blue-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
-                          >
-                            <Edit className="w-4 h-4" />
-                            Editar
-                          </button>
-                          <button
-                            onClick={() => {/* TODO: Implementar eliminación */}}
-                            className="flex items-center gap-1 bg-red-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-700 transition-colors"
-                          >
+                        <span className="text-xs font-mono text-gray-400 dark:text-gray-500 bg-gray-100 dark:bg-gray-600 px-2 py-1 rounded">
+                          {checklist.id.split('_')[1]}
+                        </span>
+                      </div>
+
+                      <div className="space-y-3 mb-6">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                            <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">SED</p>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                              {checklist.sed || 'No especificado'}
+                            </p>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                            <MapPin className="w-4 h-4 text-green-600 dark:text-green-400" />
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-500 dark:text-gray-400">Ubicación</p>
+                            <p className="text-sm font-medium text-gray-900 dark:text-white">
+                              {checklist.ubicacion || 'No especificado'}
+                            </p>
+                          </div>
+                        </div>
+
+                        {(checklist as any).cliente_campana && ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                          <div className="flex items-center gap-2">
+                            <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full text-xs">
+                              Campaña
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setSelectedChecklist(checklist)}
+                          className="flex-1 flex items-center justify-center gap-2 bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-indigo-700 transition-colors"
+                        >
+                          <Eye className="w-4 h-4" />
+                          Ver
+                        </button>
+                        <button
+                          onClick={() => handleEdit(checklist.id)}
+                          className="flex-1 flex items-center justify-center gap-2 bg-blue-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors"
+                        >
+                          <Edit className="w-4 h-4" />
+                          Editar
+                        </button>
+                        <button
+                          onClick={() => handleDelete(checklist.id)}
+                          disabled={deletingId === checklist.id}
+                          className="flex-1 flex items-center justify-center gap-2 bg-red-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-red-700 transition-colors disabled:opacity-50"
+                        >
+                          {deletingId === checklist.id ? (
+                            <RefreshCw className="w-4 h-4 animate-spin" />
+                          ) : (
                             <Trash2 className="w-4 h-4" />
-                            Eliminar
-                          </button>
-                        </div>
+                          )}
+                          {deletingId === checklist.id ? 'Eliminando...' : 'Eliminar'}
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -334,18 +379,77 @@ export default function ChecklistList() {
                   ✕
                 </button>
               </div>
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <span className="font-semibold">ID:</span>
-                    <p className="text-gray-600">{selectedChecklist.id}</p>
-                  </div>
-                  <div>
-                    <span className="font-semibold">Fecha de creación:</span>
-                    <p className="text-gray-600">{formatDate(selectedChecklist.createdAt)}</p>
+              <div className="space-y-6">
+                {/* Información General */}
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <h4 className="font-bold text-gray-800 mb-3">Información General</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <span className="font-semibold text-gray-700">ID:</span>
+                      <p className="text-gray-600">{selectedChecklist.id}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Fecha de creación:</span>
+                      <p className="text-gray-600">{formatDate(selectedChecklist.createdAt)}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Técnico:</span>
+                      <p className="text-gray-600">{selectedChecklist.tecnico_nombre || 'No especificado'}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">SED:</span>
+                      <p className="text-gray-600">{selectedChecklist.sed || 'No especificado'}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Ubicación:</span>
+                      <p className="text-gray-600">{selectedChecklist.ubicacion || 'No especificado'}</p>
+                    </div>
+                    <div>
+                      <span className="font-semibold text-gray-700">Fecha del trabajo:</span>
+                      <p className="text-gray-600">
+                        {selectedChecklist.fecha_dia && selectedChecklist.fecha_mes && selectedChecklist.fecha_ano 
+                          ? `${selectedChecklist.fecha_dia}/${selectedChecklist.fecha_mes}/${selectedChecklist.fecha_ano}`
+                          : 'No especificada'
+                        }
+                      </p>
+                    </div>
                   </div>
                 </div>
-                {/* Aquí puedes agregar más detalles del checklist */}
+
+                {/* Tipos de Cliente */}
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <h4 className="font-bold text-gray-800 mb-3">Tipos de Cliente</h4>
+                  <div className="flex flex-wrap gap-4">
+                    {(selectedChecklist as any).cliente_campana && ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                      <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">Campaña de Medición</span>
+                    )}
+                    {(selectedChecklist as any).cliente_reclamo && ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                      <span className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">Reclamo Cliente</span>
+                    )}
+                    {(selectedChecklist as any).cliente_sec && ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                      <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">Requerimiento SEC</span>
+                    )}
+                    {!(selectedChecklist as any).cliente_campana && !(selectedChecklist as any).cliente_reclamo && !(selectedChecklist as any).cliente_sec && ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                      <span className="text-gray-500 text-sm">No especificado</span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Descripción del Trabajo */}
+                {(selectedChecklist as any).descripcion_trabajo && ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                  <div className="bg-yellow-50 p-4 rounded-lg">
+                    <h4 className="font-bold text-gray-800 mb-3">Descripción del Trabajo</h4>
+                    <p className="text-gray-700">{(selectedChecklist as any).descripcion_trabajo}</p> {/* eslint-disable-line @typescript-eslint/no-explicit-any */}
+                  </div>
+                )}
+
+                {/* Estado del Medidor */}
+                {(selectedChecklist as any).estado_medidor && ( // eslint-disable-line @typescript-eslint/no-explicit-any
+                  <div className="bg-purple-50 p-4 rounded-lg">
+                    <h4 className="font-bold text-gray-800 mb-3">Estado del Medidor</h4>
+                    <p className="text-gray-700">{(selectedChecklist as any).estado_medidor}</p> {/* eslint-disable-line @typescript-eslint/no-explicit-any */}
+                  </div>
+                )}
               </div>
             </div>
           </div>
